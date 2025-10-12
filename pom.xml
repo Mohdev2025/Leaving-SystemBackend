@@ -38,6 +38,7 @@
 -->
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 
  <dependency>
     <groupId>org.apache.httpcomponents.client5</groupId>
@@ -57,6 +58,8 @@
 
 =======
 >>>>>>> c8dc33f085b4f205b3e99d5e031b445c7234d9b3
+=======
+>>>>>>> c8dc33f085b4f205b3e99d5e031b445c7234d9b3
 <dependency>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-security</artifactId>
@@ -68,6 +71,7 @@
 		</dependency>
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 <dependency>
     <groupId>org.apache.httpcomponents.client5</groupId>
     <artifactId>httpclient5</artifactId>
@@ -75,6 +79,8 @@
 
 
 
+=======
+>>>>>>> c8dc33f085b4f205b3e99d5e031b445c7234d9b3
 =======
 >>>>>>> c8dc33f085b4f205b3e99d5e031b445c7234d9b3
 		<dependency>

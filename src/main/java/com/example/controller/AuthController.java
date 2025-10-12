@@ -1,4 +1,3 @@
-<<<<<<< HEAD
  package com.example.controller;
 
 import com.example.model.User;
@@ -7,20 +6,11 @@ import java.util.HashMap;
 import java.util.Map;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-=======
-package com.example.controller;
-
-import com.example.model.User;
-import com.example.service.UserService;
->>>>>>> c8dc33f085b4f205b3e99d5e031b445c7234d9b3
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/auth")
-<<<<<<< HEAD
 @CrossOrigin(origins = "http://localhost:4200")
-=======
->>>>>>> c8dc33f085b4f205b3e99d5e031b445c7234d9b3
 public class AuthController {
 
     private final UserService service;
@@ -30,7 +20,6 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-<<<<<<< HEAD
     public ResponseEntity<?> login(@RequestBody User loginRequest) {
         User user = service.authenticate(loginRequest.getEmail(), loginRequest.getPassword());
 
@@ -71,14 +60,4 @@ public class AuthController {
     private String generateSimpleToken(User user) {
         return "Bearer_" + user.getEmail() + "_" + System.currentTimeMillis();
     }
-=======
-    public String login(@RequestBody User user) {
-        boolean isValid = service.validateUser(user.getUsername(), user.getPassword());
-        if (isValid) {
-            return "Login successful!";
-        } else {
-            return "Invalid username or password!";
-        }
-    }
->>>>>>> c8dc33f085b4f205b3e99d5e031b445c7234d9b3
 }

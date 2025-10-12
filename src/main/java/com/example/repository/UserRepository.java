@@ -1,11 +1,14 @@
-package com.example.repository;
+ package com.example.repository;
 
 import com.example.model.User;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.http.*;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.Map;
+import java.util.List;
 
 @Repository
 public class UserRepository {
@@ -24,31 +27,44 @@ public class UserRepository {
         this.baseId = baseId;
         this.userTableId = userTableId;
     }
-
-    public User findByUsername(String username) {
-        String url = "https://api.airtable.com/v0/" + baseId + "/" + userTableId
-                + "?filterByFormula={usernameFormula}";
-
+public User findByEmail(String userEmail) {
+    try {
+        String url = "https://api.airtable.com/v0/" + baseId + "/" + userTableId;
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", "Bearer " + apiKey);
         HttpEntity<String> entity = new HttpEntity<>(headers);
-
-        String formula = "({Username}='" + username + "')";
-        url = url.replace("{usernameFormula}", formula);
-
         ResponseEntity<Map> response = restTemplate.exchange(url, HttpMethod.GET, entity, Map.class);
 
         Map<String, Object> body = response.getBody();
         if (body != null && body.containsKey("records")) {
-            var records = (java.util.List<Map<String, Object>>) body.get("records");
-            if (!records.isEmpty()) {
-                Map<String, Object> fields = (Map<String, Object>) records.get(0).get("fields");
-                return new User(
-                        (String) fields.get("Username"),
-                        (String) fields.get("Password")
-                );
+            List<Map<String, Object>> records = (List<Map<String, Object>>) body.get("records");
+            
+            for (Map<String, Object> record : records) {
+                Map<String, Object> fields = (Map<String, Object>) record.get("fields");
+                String email = (String) fields.get("userEmail");
+                
+                if (email != null && email.equals(userEmail)) {
+                    String password = (String) fields.get("Password");
+                    String name = (String) fields.get("name");
+                    String role = (String) fields.get("role");
+                    String contracttype = (String) fields.get("contracttype");
+                    
+                    User user = new User(email, password, name, role, contracttype);
+                    
+                    // هذا السطر مهم جداً
+                    String recordId = (String) record.get("id");
+                    user.setRecordId(recordId);
+                    
+                    System.out.println("DEBUG - Record ID: " + recordId); // عشان تتأكد
+                    
+                    return user;
+                }
             }
         }
-        return null;
+    } catch (Exception e) {
+        System.err.println("Error: " + e.getMessage());
+        e.printStackTrace();
     }
+    return null;
+}
 }

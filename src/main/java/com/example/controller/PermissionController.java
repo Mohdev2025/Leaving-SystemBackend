@@ -33,12 +33,13 @@ public ResponseEntity<Map<String, Object>> createPermission(@RequestBody Map<Str
     String from = requestBody.get("from");
     String to = requestBody.get("to");
     String reason = requestBody.get("reason");
-    String userId = requestBody.get("userId");
+    String name = requestBody.get("name");   
+    		String userId = requestBody.get("userId");
     String status = requestBody.getOrDefault("status", "Pending");
 
     // إنشاء البرميشن
     Map<String, Object> createdPermission = permissionService.createPermission(
-        permissionType, date, from, to, reason, userId, status
+        permissionType, date, from, to, reason,name,  userId ,status
     );
 
     // لو البيانات موجودة

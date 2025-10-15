@@ -36,6 +36,7 @@ public class LeaveController {
                 request.getLeaveType(),
                 request.getFromDate(),
                 request.getToDate(),
+                request.getName(),
                 request.getDescription(),
                 request.getStatus()
         );

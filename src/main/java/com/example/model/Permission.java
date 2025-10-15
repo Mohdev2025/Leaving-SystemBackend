@@ -7,6 +7,7 @@ public class Permission {
     private String from;
     private String to;
     private String reason;
+    private String name ;
     private String userId;
     private String status;
 
@@ -14,13 +15,14 @@ public class Permission {
     public Permission() {}
 
     public Permission(String id, String permissionType, String date, String from, 
-                     String to, String reason, String userId, String status) {
+                     String to, String reason,String name , String userId, String status) {
         this.id = id;
         this.permissionType = permissionType;
         this.date = date;
         this.from = from;
         this.to = to;
         this.reason = reason;
+        this.name= name ;
         this.userId = userId;
         this.status = status;
     }
@@ -73,6 +75,16 @@ public class Permission {
     public void setReason(String reason) { 
         this.reason = reason; 
     }
+    
+    public String getname() { 
+        return reason; 
+    }
+    
+    public void setname(String reason) { 
+        this.reason = reason; 
+    }
+    
+    
 
     public String getUserId() { 
         return userId; 

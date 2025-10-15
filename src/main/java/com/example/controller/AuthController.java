@@ -35,8 +35,11 @@ public class AuthController {
             userInfo.put("name", user.getName());
             userInfo.put("role", user.getRole());
             userInfo.put("contracttype", user.getContracttype());
+            userInfo.put("position", user.getPosition()); // الحقل الجديد
+            userInfo.put("employeeImage", user.getEmployeeImage()); // الحقل الجديد
 
             response.put("user", userInfo);
+
 
             return ResponseEntity.ok(response);
 

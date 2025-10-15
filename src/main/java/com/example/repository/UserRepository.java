@@ -38,25 +38,33 @@ public User findByEmail(String userEmail) {
         Map<String, Object> body = response.getBody();
         if (body != null && body.containsKey("records")) {
             List<Map<String, Object>> records = (List<Map<String, Object>>) body.get("records");
-            
+
             for (Map<String, Object> record : records) {
                 Map<String, Object> fields = (Map<String, Object>) record.get("fields");
                 String email = (String) fields.get("userEmail");
-                
+
                 if (email != null && email.equals(userEmail)) {
                     String password = (String) fields.get("Password");
                     String name = (String) fields.get("name");
                     String role = (String) fields.get("role");
                     String contracttype = (String) fields.get("contracttype");
-                    
-                    User user = new User(email, password, name, role, contracttype);
-                    
-                    // هذا السطر مهم جداً
+                    String position = (String) fields.get("position"); // الحقل الجديد
+
+                    // جلب الصورة من Attachment
+                    List<Map<String, Object>> attachments = (List<Map<String, Object>>) fields.get("employeeImage");
+                    String employeeImageUrl = null;
+                    if (attachments != null && !attachments.isEmpty()) {
+                        employeeImageUrl = (String) attachments.get(0).get("url");
+                    }
+
+                    // إنشاء المستخدم باستخدام الاسم الصحيح للصورة
+                    User user = new User(email, password, name, role, contracttype, position, employeeImageUrl);
+
                     String recordId = (String) record.get("id");
                     user.setRecordId(recordId);
-                    
-                    System.out.println("DEBUG - Record ID: " + recordId); // عشان تتأكد
-                    
+
+                    System.out.println("DEBUG - Record ID: " + recordId);
+
                     return user;
                 }
             }
@@ -67,4 +75,5 @@ public User findByEmail(String userEmail) {
     }
     return null;
 }
+
 }

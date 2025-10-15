@@ -46,8 +46,10 @@ public class LeaveService {
                               String typeRecordId,
                               String startTime,
                               String endTime,
+                              
+                              String name,
                               String description,
-                              String status) {
+                              String status ) {
 
         String leaveId = generateLeaveId();
 
@@ -57,6 +59,7 @@ public class LeaveService {
         System.out.println("Type Record ID: " + typeRecordId);
         System.out.println("Start Time: " + startTime);
         System.out.println("End Time: " + endTime);
+        System.out.println("name:" + name);
         System.out.println("Description: " + description);
         System.out.println("Status: " + status);
 
@@ -72,6 +75,7 @@ public class LeaveService {
         fields.put("type id", new String[]{typeRecordId});
         fields.put("start time", startTime);
         fields.put("end time", endTime);
+        fields.put("name", name);
         fields.put("description", description);
         fields.put("status", status);
 

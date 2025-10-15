@@ -27,6 +27,7 @@ public class PermissionService {
             String from,
             String to,
             String reason,
+            String name ,
             String userId,
             String status
     ) {
@@ -36,6 +37,7 @@ public class PermissionService {
             "From", from,
             "To", to,
             "Reason", reason,
+            "name",name,
             "User (userid)", List.of(userId),
             "status", status != null ? status : "Pending"
         );
@@ -49,10 +51,11 @@ public class PermissionService {
             String from,
             String to,
             String reason,
+            String name ,
             String userId
           
     ) {
-        return createPermission(permissionType, date, from, to, reason, userId, "Pending");
+        return createPermission(permissionType, date, from, to, reason, userId,name , "Pending");
     }
 
     // 3️⃣ Get permissions for specific user

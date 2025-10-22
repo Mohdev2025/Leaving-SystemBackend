@@ -141,4 +141,57 @@ public class LeaveController {
             return ResponseEntity.status(500).body(response);
         }
     }
+    
+    
+    
+ // 7️⃣ Get employees currently on leave and remaining days
+    @GetMapping("/currently-on-leave")
+    public ResponseEntity<?> getEmployeesCurrentlyOnLeave() {
+        List<Map<String, Object>> allLeaves = leaveService.getAllLeaveRequests();
+        List<Map<String, Object>> currentLeaves = new ArrayList<>();
+        Date today = new Date();
+
+        for (Map<String, Object> leave : allLeaves) {
+            Map<String, Object> fields = (Map<String, Object>) leave.get("fields");
+            if (fields == null) continue;
+
+            String status = (String) fields.get("status");
+            String fromDateStr = (String) fields.get("start time");
+            String toDateStr = (String) fields.get("end time");
+
+            if (status == null || fromDateStr == null || toDateStr == null) continue;
+
+            try {
+                Date fromDate = new java.text.SimpleDateFormat("yyyy-MM-dd").parse(fromDateStr);
+                Date toDate = new java.text.SimpleDateFormat("yyyy-MM-dd").parse(toDateStr);
+
+                // Check if currently on leave
+                if (status.equalsIgnoreCase("Approved") && !today.before(fromDate) && !today.after(toDate)) {
+                    long diffInMillies = toDate.getTime() - today.getTime();
+                    long daysRemaining = (diffInMillies / (1000 * 60 * 60 * 24)) + 1;
+
+                    Map<String, Object> info = new HashMap<>();
+                    info.put("name", fields.get("name"));
+                    info.put("leaveType", fields.get("leaveType"));
+                    info.put("fromDate", fromDateStr);
+                    info.put("toDate", toDateStr);
+                    info.put("daysRemaining", daysRemaining);
+
+                    currentLeaves.add(info);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        return ResponseEntity.ok(currentLeaves);
+    }
+
+    
+    
+    
+    
+    
+    
+    
 }

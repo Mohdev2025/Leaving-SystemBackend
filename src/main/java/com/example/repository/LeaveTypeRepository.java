@@ -23,7 +23,7 @@ public class LeaveTypeRepository {
                                @Value("${airtable.base.id}") String baseId,
                                @Value("${airtable.table.leavetype}") String leaveTypeTableId) {
         this.restTemplate = restTemplate;
-        this.apiKey = apiKey;
+        this.apiKey = apiKey;                                          
         this.baseId = baseId;
         this.leaveTypeTableId = leaveTypeTableId;
     }
@@ -32,7 +32,7 @@ public class LeaveTypeRepository {
         try {
             String url = "https://api.airtable.com/v0/" + baseId + "/" + leaveTypeTableId;
 
-            HttpHeaders headers = new HttpHeaders();
+            HttpHeaders headers = new HttpHeaders(); 
             headers.set("Authorization", "Bearer " + apiKey);
 
             HttpEntity<String> entity = new HttpEntity<>(headers);
